@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Bullets/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://spritesheets/tanks.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6.7274, 4.37767 )
+
+[node name="EnemyBullet" instance=ExtResource( 1 )]
+collision_layer = 4
+collision_mask = 7
+damage = 5
+
+[node name="Sprite" parent="." index="0"]
+rotation = 3.14159
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 348, 222, 36, 16 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( -2.0979, 0 )
+shape = SubResource( 1 )

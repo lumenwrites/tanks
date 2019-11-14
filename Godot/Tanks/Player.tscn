@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Tanks/Tank.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tanks/Player.gd" type="Script" id=2]
+[ext_resource path="res://Bullets/PlayerBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://spritesheets/tanks.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 41.7508, 40.8088 )
+
+[sub_resource type="SphereMesh" id=2]
+
+[node name="Player" instance=ExtResource( 1 )]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 2 )
+Bullet = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource( 1 )
+
+[node name="Body" parent="." index="1"]
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 104, 346, 112, 96 )
+
+[node name="Turret" parent="." index="2"]
+texture = ExtResource( 4 )
+offset = Vector2( 20, 0 )
+region_enabled = true
+region_rect = Rect2( 199, 36, 60, 24 )
+
+[node name="Muzzle" parent="Turret" index="0"]
+position = Vector2( 75, 0 )
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." index="4"]
+modulate = Color( 0.121569, 0.239216, 0.4, 0.0470588 )
+scale = Vector2( 150, 150 )
+mesh = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="5"]
+current = true
+zoom = Vector2( 2, 2 )
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
