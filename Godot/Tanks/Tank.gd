@@ -8,6 +8,9 @@ export (PackedScene) var Bullet
 export (float) var rotation_speed = 5
 export (float) var gun_cooldown = 0.4
 export (int) var max_health = 100
+export (int) var gun_shots = 1
+export (float, 0, 1.5) var gun_spread = 0.2
+
 
 var vel = Vector2()
 var can_shoot = true
@@ -23,13 +26,19 @@ func _ready():
 func control(delta):
 	pass
 	
-func shoot(target=null):
+func shoot(num, spread, target=null): # num is a number of shots to fire
 	if can_shoot:
 		can_shoot = false
 		$GunTimer.start()
 		var dir = Vector2(1,0).rotated($Turret.global_rotation)	 # direction of the turret
-		# pass target(comes from EnemyTank) along with the signal to bullet
-		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir, target)
+		if num > 1:
+			# Shoot multiple bullets
+			for i in range(num):
+				var angle = -spread + i * (2*spread)/(num-1) 
+				emit_signal('shoot', Bullet, $Turret/Muzzle.global_position.rotated(angle), dir, target)
+		else:
+			# pass target(comes from EnemyTank) along with the signal to bullet
+			emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir, target)
 		$AnimationPlayer.play('muzzle_flash')
 		
 		
@@ -46,7 +55,15 @@ func take_damage(amount):
 	if health <= 0:
 		explode()
 		
+func heal(amount):
+	health += amount
+	health = clamp(health,0,max_health)
+	emit_signal('health_changed', health * 100/max_health)
+	
+	
+	
 func explode():
+	# Triggered by take_damage when health reaches zero
 	$CollisionShape2D.disabled = true # to prevent additional bullets from hitting the tank
 	alive = false # makes physics process for movement stop running
 	$Turret.hide()

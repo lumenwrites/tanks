@@ -48,8 +48,6 @@ func _on_Explosion_animation_finished():
 	queue_free()
 
 
-	
-
 func _on_Bullet_body_entered(body):
 	explode()
 	if body.has_method('take_damage'): # if it's enemy tank and not a wall
@@ -57,6 +55,12 @@ func _on_Bullet_body_entered(body):
 		body.take_damage(damage)
 
 
+func _on_Bullet_area_entered(area):
+	# To explode other bullets
+	explode()
+	
 func _on_Lifetime_timeout():
 	explode()
+
+
 

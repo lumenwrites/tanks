@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Bullets/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Missile.gd" type="Script" id=2]
@@ -14,6 +14,13 @@ particles_anim_h_frames = 24
 particles_anim_v_frames = 1
 particles_anim_loop = true
 
+[sub_resource type="Curve" id=4]
+max_value = 2.0
+_data = [ Vector2( 0.0391727, 0.805739 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.18086 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
 [sub_resource type="ParticlesMaterial" id=3]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
@@ -22,11 +29,12 @@ initial_velocity_random = 1.0
 angular_velocity = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+scale_curve = SubResource( 5 )
 anim_speed = 1.0
 
 [node name="Missile" instance=ExtResource( 1 )]
 collision_layer = 8
-collision_mask = 7
+collision_mask = 15
 script = ExtResource( 2 )
 speed = 500
 damage = 15

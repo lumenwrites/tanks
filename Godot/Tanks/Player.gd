@@ -25,7 +25,7 @@ func control(delta):
 	vel *= friction
 	# Shooting
 	if Input.is_action_pressed("click"):
-		shoot()
+		shoot(gun_shots, gun_spread)
 
 func control_mouse(delta):
 	# Rotate towards the mouse
@@ -37,7 +37,7 @@ func control_mouse(delta):
 	vel *= friction
 	# Shooting
 	if Input.is_action_pressed("click"):
-		shoot()
+		shoot(gun_shots, gun_spread)
 		
 func control_simple(delta):
 	# (overrides the control function of the parent class
@@ -68,7 +68,7 @@ func control_simple(delta):
 	vel *= friction
 	# Shooting
 	if Input.is_action_pressed("click"):
-		shoot()
+		shoot(gun_shots, gun_spread)
 		
 func die():
 	emit_signal('dead')

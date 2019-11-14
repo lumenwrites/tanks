@@ -40,7 +40,7 @@ func _process(delta):
 		# Tank should fire only when turret is pointing at player
 		# Use dot product to find the angle
 		if target_dir.dot(current_dir) > 0.9:
-			shoot(target)
+			shoot(gun_shots, gun_spread, target)
 			
 func _on_DetectRadius_body_entered(body):
 	target = body

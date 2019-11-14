@@ -5,9 +5,11 @@
 [ext_resource path="res://spritesheets/tanks.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16.3268, 12.1653 )
+extents = Vector2( 18.812, 13.3001 )
 
 [node name="Bullet" instance=ExtResource( 1 )]
+collision_layer = 8
+collision_mask = 13
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
@@ -17,4 +19,5 @@ region_enabled = true
 region_rect = Rect2( 388, 274, 32, 24 )
 
 [node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, -0.340561 )
 shape = SubResource( 1 )
