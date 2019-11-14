@@ -2,12 +2,15 @@ extends KinematicBody2D
 
 signal shoot
 signal health_changed
+signal ammo_changed
 signal dead
 
 export (PackedScene) var Bullet
 export (float) var rotation_speed = 5
 export (float) var gun_cooldown = 0.4
 export (int) var max_health = 100
+export (int) var max_ammo = 20
+export (int) var ammo = -1 setget set_ammo # -1 means infinite ammo
 export (int) var gun_shots = 1
 export (float, 0, 1.5) var gun_spread = 0.2
 
@@ -21,13 +24,15 @@ func _ready():
 	health = max_health
 	# Send the percentage of remaining health to the healthbar
 	emit_signal('health_changed', health * 100/max_health)
+	emit_signal('ammo_changed', ammo * 100/max_ammo)
 	$GunTimer.wait_time = gun_cooldown
 	
 func control(delta):
 	pass
 	
 func shoot(num, spread, target=null): # num is a number of shots to fire
-	if can_shoot:
+	if can_shoot and ammo != 0:
+		self.ammo -= 1
 		can_shoot = false
 		$GunTimer.start()
 		var dir = Vector2(1,0).rotated($Turret.global_rotation)	 # direction of the turret
@@ -83,4 +88,10 @@ func _on_Explosion_animation_finished():
 func _on_GunTimer_timeout():
 	can_shoot = true
 	
-
+func set_ammo(value):
+	# Because declaring variables at the top ties a function to ammo change,
+	# this function runs every time ammo variable changes? So it's triggered by reducing ammo in shoot?
+	if value > max_ammo:
+		value = max_ammo
+	ammo = value
+	emit_signal('ammo_changed', ammo * 100/max_ammo)

@@ -54,6 +54,7 @@ shape = SubResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( -160, 446 )
+ammo = 10
 
 [node name="Paths" type="Node2D" parent="."]
 
@@ -105,6 +106,7 @@ mesh = SubResource( 4 )
 
 [node name="Pickup" parent="Items" instance=ExtResource( 7 )]
 position = Vector2( 110, 446 )
+type = 1
 
 [node name="MissileTurret" parent="." instance=ExtResource( 8 )]
 position = Vector2( 230, 90 )
@@ -115,6 +117,7 @@ position = Vector2( 1060, -160 )
 
 [node name="GunTurret2" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1060, 40 )
+[connection signal="ammo_changed" from="Player" to="HUD" method="update_ammo"]
 [connection signal="dead" from="Player" to="." method="_on_Player_dead"]
 [connection signal="health_changed" from="Player" to="HUD" method="update_healthbar"]
 [connection signal="shoot" from="Player" to="." method="_on_Tank_shoot"]

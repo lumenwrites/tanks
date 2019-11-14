@@ -5,6 +5,9 @@ var bar_green = preload("res://spritesheets/UI/barHorizontal_green_mid 200.png")
 var bar_yellow = preload("res://spritesheets/UI/barHorizontal_yellow_mid 200.png")
 var bar_texture
 
+func update_ammo(value):
+	$Margin/HBox/AmmoGauge.value = value
+	
 func update_healthbar(value):
 	bar_texture = bar_green
 	if value < 60:
